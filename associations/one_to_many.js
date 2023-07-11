@@ -1,3 +1,4 @@
+const { sequelize } = require('../config/db_config')
 const { Grade } = require('../models/grade.model')
 const { Student } = require('../models/student.model')
 
@@ -10,25 +11,24 @@ const student_data = [
     { name: "Robert Gray", gradeId: 2 },
     { name: "Sam Lewis", gradeId: 1 }
 ]
-Student.belongsTo(Grade);
+// Create a 1:m association between Student and Grade
+Grade.hasMany(Student);
 
 sequelize.sync({ force: true }).then(() => {
     Grade.bulkCreate(grade_data, { validate: true }).then(() => {
         Student.bulkCreate(student_data, { validate: true }).then(() => {
-
-            // Retrieve Data
-            // A list of associations to eagerly load 
-            // using a left join(a single association is also supported).
-            Student.findAll({
+            Grade.findAll({
+                where: {
+                    grade: 9
+                },
                 include: [{
-                    model: Grade
+                    model: Student
                 }]
             }).then(result => {
-                console.log(result)
+                console.dir(result, { depth: 5 });
             }).catch((error) => {
                 console.error('Failed to retrieve data : ', error);
             });
-
         }).catch((err) => { console.log(err); });
     }).catch((err) => { console.log(err); });
 }).catch((error) => {

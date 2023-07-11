@@ -22,10 +22,10 @@ const Student = sequelize.define("students", {
  */
 
 // Add book model to database
-sequelize.sync().then(() => {
-    console.log('Book table created successfully!');
-}).catch((error) => {
-    console.error('Unable to create table : ', error);
-});
+// sequelize.sync().then(() => {
+//     console.log('Book table created successfully!');
+// }).catch((error) => {
+//     console.error('Unable to create table : ', error);
+// });
 
 exports.Student = Student
