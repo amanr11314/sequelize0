@@ -13,3 +13,32 @@ sequelize.authenticate().then(() => {
 }).catch((error) => {
     console.error('Unable to connect to the database: ', error);
 });
+
+// using raw query in sequelize
+
+
+// using array replacement
+// sequelize.query(
+//     'SELECT * FROM students WHERE id = ?',
+//     {
+//         replacements: [1],
+//         type: sequelize.QueryTypes.SELECT
+//     }
+// ).then(result => {
+//     console.log(result);
+// }).catch((error) => {
+//     console.error('Failed to insert data : ', error);
+// });
+
+// using object replacement
+sequelize.query(
+    'SELECT * FROM students WHERE id = :id',
+    {
+        replacements: { id: 2 },
+        type: sequelize.QueryTypes.SELECT
+    }
+).then(result => {
+    console.log(result);
+}).catch((error) => {
+    console.error('Failed to insert data : ', error);
+});
